@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<style type="text/css">
+	h1{
+		
+		color: #ff006a;
+	}
+	input{
+          width: 8%;
+          height: 35px;
+          border-radius: 5px;
+          border: 2px solid #ff006a;
+          outline: none !important;
+          font-size: 20px;
+          background-color: #ff006a;
+          color: white;
+          font-weight: bolder;
+
+        }
+        body{
+        background-color: #116fa7;
+
+        }
+</style>
+</head>
+<body>
+	<br>
+	<br>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2">
+        
+      </div>
+      <div class="col-lg-8">
+
+
+    <div class="container bg-white">
+
+  
+
+  <h1 class="text-center">Employee Database</h1>
+  <br>
+  <div class="text-center">
+  <input type="button" id="button" value="Add" onclick="add()"/>
+    </div>
+    <br>
+       <table class="table table-hover">
+        <thead>
+         <tr>
+        <th>ID</th>
+
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Employee number</th>
+        <th>Gender</th>
+        <th>Action</th> 
+      </tr>
+       </thead>
+      <tbody id="tbody">
+       
+     </tbody> 
+     <!-- <tr>
+        <td id="name"></td>
+        <td id="email"></td>
+        <td id="age"></td>
+        <td id="Aadhaarnumber"></td>
+        <td id="gender"></td>
+        <td id="file"></td>
+      </tr> -->
+   
+    
+  </table>
+    </div>
+        
+      </div>
+      <div class="col-lg-2">
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#button").click(function(){
+    location.replace("index.html");
+  });
+ var list="";
+
+$.ajax({
+   type:"GET",
+   url:"https://5cc150a90e53350014908c16.mockapi.io/api/v1/employeedetail",
+   dataType: "json",
+   success:function(result){
+      list=result;
+      console.log(list);
+      for(let i=0;i< list.length;i++){
+      $("#tbody").append("<tr><td>"+list[i].id+"</td>"+"<td>"+list[i].name+"</td>"+"<td>"+list[i].email+"</td>"+"<td>"+list[i].age+"</td>"+"<td>"+list[i].employeenumber+"</td>"+"<td>"+list[i].gender+"</td>+<td>"+'<button value='+list[i].id+' id="but">'+'del'+'</button>'+"</td></tr>");
+
+}
+ }
+
+});
+});
+$(document).on("click" ,"#but" ,function(event){
+   var id=event.target.value
+     //console.log(event.target.value)
+ // console.log(id)
+
+ //.then((willDelete) => {
+ //if(willDelete) {
+      $.ajax({
+        type: "DELETE",
+        url:"https://5cc150a90e53350014908c16.mockapi.io/api/v1/employeedetail/"+id,
+        dataType: "json",
+    success:function(value){
+      console.log(value)
+      location.replace("add.html")
+    }
+
+   });
+ //}
+ //});
+
+});
+
+
+  
+</script>
+
+</body>
+
+</html>
+
+
